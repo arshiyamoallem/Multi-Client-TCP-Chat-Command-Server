@@ -23,37 +23,52 @@ A lightweight multi-client chat server built with pure Java. Users connect over 
 ## Project Structure
 
 ```text
-src/
-├── ChatServer.java      # Opens port 8080, accepts clients, tracks users, broadcasts messages
-├── ClientHandler.java   # Per-client worker thread: username prompt, message loop, commands
-└── ChatClient.java      # Terminal client: sends keyboard input, prints incoming messages
+.
+├── src/
+│   ├── ChatServer.java      # Opens port 8080, accepts clients, tracks users, broadcasts messages
+│   ├── ClientHandler.java   # Per-client worker thread: username prompt, message loop, commands
+│   └── ChatClient.java      # Terminal client: sends keyboard input, prints incoming messages
+├── Makefile                 # build, server, client and clean targets
+├── run-server.bat           # Windows alternative to `make server`
+├── run-client.bat           # Windows alternative to `make client`
+└── .gitignore
 ```
+
+---
+
+## Requirements
+
+- JDK 11 or newer (`javac -version` should work)
+- `make` (optional, Windows users can use the `.bat` scripts instead)
 
 ---
 
 ## How to Run
 
-### 1. Compile
+### With make (Linux, macOS, WSL)
+
+```bash
+make server    # compile and start the server on port 8080
+make client    # compile and start a client (run in each extra terminal)
+make clean     # delete compiled files
+```
+
+### On Windows (no make)
+
+```bat
+run-server.bat
+run-client.bat
+```
+
+### Manually
 
 ```bash
 javac -d bin src/*.java
-```
-
-### 2. Start the server
-
-```bash
 java -cp bin ChatServer
-```
-
-The server listens on port 8080.
-
-### 3. Connect clients (one per terminal window)
-
-```bash
 java -cp bin ChatClient
 ```
 
-You can also connect with Netcat or Telnet:
+You can also connect with Netcat or Telnet instead of the Java client:
 
 ```bash
 nc localhost 8080
